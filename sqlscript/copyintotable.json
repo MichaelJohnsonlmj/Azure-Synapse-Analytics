@@ -1,0 +1,17 @@
+{
+	"name": "copyintotable",
+	"properties": {
+		"content": {
+			"query": "CREATE TABLE dbo.copy_into_table\n(\n    Dealer_ID VARCHAR(50),\n    Model_ID VARCHAR(50),\n    Branch_ID VARCHAR(50),\n    Date_ID VARCHAR(50),\n    Units_Sold VARCHAR(50),\n    Revenue VARCHAR(50)\n)\nWITH\n(\n    DISTRIBUTION = ROUND_ROBIN,\n    HEAP\n);\n\nSELECT\n    COLUMN_NAME,\n    DATA_TYPE,\n    CHARACTER_MAXIMUM_LENGTH\nFROM INFORMATION_SCHEMA.COLUMNS\nWHERE TABLE_NAME = 'copy_into_table';\n\n\nSELECT\n    SCHEMA_NAME(schema_id) AS SchemaName,\n    name AS TableName\nFROM sys.tables\nWHERE name = 'copyt_into_table';\n\n\n\nCOPY INTO dbo.copy_into_table\n(\n    Dealer_ID,\n    Model_ID,\n    Branch_ID,\n    Date_ID,\n    Units_Sold,\n    Revenue\n)\nFROM 'https://azureadlsgen2storage.dfs.core.windows.net/raw/extrnl_table/'\nWITH\n(\n    FILE_TYPE = 'PARQUET',\n    CREDENTIAL = (IDENTITY = 'Managed Identity')\n);\n\nselect * from copy_into_table;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "mikededicatedpool",
+				"poolName": "mikededicatedpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

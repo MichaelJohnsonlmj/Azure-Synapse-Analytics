@@ -1,0 +1,17 @@
+{
+	"name": "dim_product",
+	"properties": {
+		"content": {
+			"query": "CREATE TABLE gold.dim_product\n(\n    product_id INT NOT NULL,\n    product_name VARCHAR(100),\n    category VARCHAR(50),\n    brand VARCHAR(50),\n    price DECIMAL(10,2)\n)\nWITH\n(\n    DISTRIBUTION = REPLICATE,\n    HEAP\n);\n\n\nCREATE TABLE gold.fact_sales\n(\n    sales_id BIGINT NOT NULL,\n    product_id INT NOT NULL,\n    customer_id INT,\n    quantity INT,\n    sales_amount DECIMAL(12,2),\n    sales_date DATE\n)\nWITH\n(\n    DISTRIBUTION = HASH(product_id),\n    CLUSTERED COLUMNSTORE INDEX\n);\n\n\n\nCREATE MASTER KEY\nENCRYPTION BY PASSWORD = 'YourStrongPassword@123';\n\n\n\nCREATE DATABASE SCOPED CREDENTIAL mikecredential\nWITH\n(\n    IDENTITY = 'Managed Identity'\n);\n\n\n\nCREATE EXTERNAL DATA SOURCE raw_ext_sources\nWITH\n(\n    LOCATION = 'https://azureadlsgen2storage.dfs.core.windows.net/raw',\n    CREDENTIAL = mikecredential\n);\n\n\nCREATE EXTERNAL FILE FORMAT raw_csv_format\nWITH\n(\n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS\n    (\n        FIELD_TERMINATOR = ',',\n        STRING_DELIMITER = '\"',\n        FIRST_ROW = 2,\n        USE_TYPE_DEFAULT = TRUE\n    )\n);",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "mikeserverlessdb",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

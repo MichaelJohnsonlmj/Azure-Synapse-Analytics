@@ -1,0 +1,17 @@
+{
+	"name": "creditiaol_ded_sql_pool",
+	"properties": {
+		"content": {
+			"query": "CREATE DATABASE SCOPED CREDENTIAL mikecredential\nWITH\n    IDENTITY = 'Managed Identity';\n\n   \n\n   CREATE EXTERNAL DATA SOURCE raw_ext_source\nWITH\n(\n    TYPE = HADOOP,\n    LOCATION = 'abfss://raw@azureadlsgen2storage.dfs.core.windows.net',\n    CREDENTIAL = mikecredential\n);\n\n\nCREATE EXTERNAL FILE FORMAT raw_parquet_format\nWITH\n(\n    FORMAT_TYPE = PARQUET\n);",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "mikededicatedpool",
+				"poolName": "mikededicatedpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

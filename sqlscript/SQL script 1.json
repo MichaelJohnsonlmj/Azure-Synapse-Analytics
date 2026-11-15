@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "CREATE DATABASE SCOPED CREDENTIAL mikecredential\nWITH\n    IDENTITY = 'Managed Identity'; \n\n\n    CREATE EXTERNAL DATA SOURCE raw_ext_sources\nWITH\n(\n    LOCATION = 'https://azureadlsgen2storage.dfs.core.windows.net/raw',\n    CREDENTIAL = mikecredential\n);\n\n-- This is auto-generated code\nSELECT\n    *\nFROM\n    OPENROWSET(\n        BULK 'revenue',\n        DATA_SOURCE='raw_ext_sources',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW=TRUE\n    ) AS query1\n\n\nCREATE EXTERNAL FILE FORMAT raw_csv_format\nWITH\n(\n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS\n    (\n        FIELD_TERMINATOR = ',',\n        STRING_DELIMITER = '\"',\n        FIRST_ROW = 2,\n        USE_TYPE_DEFAULT = TRUE\n    )\n);\n\n\n\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "mikeserverlessdb",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

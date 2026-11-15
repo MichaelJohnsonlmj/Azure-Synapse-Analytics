@@ -1,0 +1,17 @@
+{
+	"name": "create_extrenal_table",
+	"properties": {
+		"content": {
+			"query": "CREATE TABLE dbo.Employee\n(\n    EmployeeID INT NOT NULL,\n    FirstName VARCHAR(50),\n    LastName VARCHAR(50),\n    Gender VARCHAR(10),\n    Email VARCHAR(100),\n    PhoneNumber VARCHAR(15),\n    Department VARCHAR(50),\n    Designation VARCHAR(50),\n    Salary DECIMAL(10,2),\n    JoiningDate DATE\n)\nWITH\n(\n    DISTRIBUTION = ROUND_ROBIN,\n);\n\n\nINSERT INTO dbo.Employee\nVALUES (1, 'John', 'Smith', 'Male', 'john@gmail.com',\n        '9876543210', 'IT', 'Data Engineer', 75000, '2023-01-15');\n\nINSERT INTO dbo.Employee\nVALUES (2, 'David', 'Miller', 'Male', 'david@gmail.com',\n        '9876543211', 'HR', 'HR Manager', 65000, '2022-05-10');\n\nINSERT INTO dbo.Employee\nVALUES (3, 'Sarah', 'Wilson', 'Female', 'sarah@gmail.com',\n        '9876543212', 'Finance', 'Analyst', 60000, '2021-08-20');\n\nINSERT INTO dbo.Employee\nVALUES (4, 'Emma', 'Brown', 'Female', 'emma@gmail.com',\n        '9876543213', 'IT', 'Developer', 70000, '2023-03-01');\n\nINSERT INTO dbo.Employee\nVALUES (5, 'Michael', 'Taylor', 'Male', 'michael@gmail.com',\n        '9876543214', 'Sales', 'Sales Executive', 55000, '2022-11-12');\n\nSELECT *\nFROM dbo.revene_externals;\n\n\nCREATE SCHEMA gold;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "mikeserverlessdb",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

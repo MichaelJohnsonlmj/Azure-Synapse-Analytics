@@ -1,0 +1,17 @@
+{
+	"name": "polybase",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL DATA SOURCE raw_polybase_source\nWITH\n(\n    TYPE = HADOOP,\n    LOCATION = 'abfss://raw@azureadlsgen2storage.dfs.core.windows.net',\n    CREDENTIAL = mikecredential\n);\n\nCREATE EXTERNAL FILE FORMAT raw_polybase_parquet\nWITH\n(\n    FORMAT_TYPE = PARQUET\n);\n\n\nCREATE EXTERNAL TABLE dbo.revenue_polybase\n(\n    Dealer_ID VARCHAR(50),\n    Model_ID VARCHAR(50),\n    Branch_ID VARCHAR(50),\n    Date_ID VARCHAR(50),\n    Units_Sold VARCHAR(50),\n    Revenue VARCHAR(50)\n)\nWITH\n(\n    LOCATION = 'extrnl_table/',\n    DATA_SOURCE = raw_polybase_source,\n    FILE_FORMAT = raw_polybase_parquet\n);\n\nSELECT TOP 10 *\nFROM dbo.revenue_polybase;\n\n\n\nCREATE TABLE dbo.revenue_polybase_internal\nWITH\n(\n    DISTRIBUTION = ROUND_ROBIN,\n    HEAP\n)\nAS\nSELECT *\nFROM dbo.revenue_polybase;\n\nselect * from revenue_polybase_internal;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "mikededicatedpool",
+				"poolName": "mikededicatedpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

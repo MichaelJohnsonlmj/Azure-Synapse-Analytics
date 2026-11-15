@@ -1,0 +1,17 @@
+{
+	"name": "Dedicated table",
+	"properties": {
+		"content": {
+			"query": "CREATE TABLE dbo.Employee\n(\n    EmployeeID INT NOT NULL,\n    FirstName VARCHAR(50),\n    LastName VARCHAR(50),\n    Gender VARCHAR(10),\n    Email VARCHAR(100),\n    PhoneNumber VARCHAR(15),\n    Department VARCHAR(50),\n    Designation VARCHAR(50),\n    Salary DECIMAL(10,2),\n    JoiningDate DATE\n)\nWITH\n(\n    DISTRIBUTION = ROUND_ROBIN,\n    HEAP\n);\n\n\n\nINSERT INTO dbo.Employee\nVALUES (101, 'John', 'Smith', 'Male', 'john@gmail.com', '9876543210', 'IT', 'Developer', 50000, '2024-01-10');\n\nINSERT INTO dbo.Employee\nVALUES (102, 'David', 'Brown', 'Male', 'david@gmail.com', '9876543211', 'HR', 'Manager', 65000, '2023-05-15');\n\nINSERT INTO dbo.Employee\nVALUES (103, 'Mary', 'Jones', 'Female', 'mary@gmail.com', '9876543212', 'Finance', 'Analyst', 45000, '2024-03-20');\n\nINSERT INTO dbo.Employee\nVALUES (104, 'Sara', 'Wilson', 'Female', 'sara@gmail.com', '9876543213', 'IT', 'Tester', 40000, '2022-08-12');\n\nINSERT INTO dbo.Employee\nVALUES (105, 'Peter', 'Taylor', 'Male', 'peter@gmail.com', '9876543214', 'Sales', 'Executive', 35000, '2023-11-01');\n\n\nselect * from dbo.Employee\n\n\n\nCREATE SCHEMA gold;\n\n\nCREATE TABLE gold.dim_product\n(\n    product_id INT NOT NULL,\n    product_name VARCHAR(100),\n    category VARCHAR(50),\n    brand VARCHAR(50),\n    price DECIMAL(10,2)\n)\nWITH\n(\n    DISTRIBUTION = REPLICATE,\n    HEAP\n);\n\n\nCREATE TABLE gold.fact_sales\n(\n    sales_id BIGINT NOT NULL,\n    product_id INT NOT NULL,\n    customer_id INT,\n    quantity INT,\n    sales_amount DECIMAL(12,2),\n    sales_date DATE\n)\nWITH\n(\n    DISTRIBUTION = HASH(product_id),\n    CLUSTERED COLUMNSTORE INDEX\n);",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "mikededicatedpool",
+				"poolName": "mikededicatedpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

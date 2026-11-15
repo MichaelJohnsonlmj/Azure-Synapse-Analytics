@@ -1,0 +1,17 @@
+{
+	"name": "revene_externals",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL TABLE dbo.revene_externals\n(\n    Dealer_ID VARCHAR(50),\n    Model_ID VARCHAR(50),\n    Branch_ID VARCHAR(50),\n    Date_ID VARCHAR(50),\n    Units_Sold VARCHAR(50),\n    Revenue VARCHAR(50)\n)\nWITH\n(\n    LOCATION = 'revenue/',\n    DATA_SOURCE = raw_ext_source,\n    FILE_FORMAT = raw_csv_format\n);\n\n\nSELECT TOP 10 *\nFROM dbo.revene_externals;\n\n\nSELECT *\nFROM sys.external_file_formats;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "mikededicatedpool",
+				"poolName": "mikededicatedpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

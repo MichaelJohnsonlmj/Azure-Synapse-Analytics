@@ -1,0 +1,17 @@
+{
+	"name": "Creexltable_withselect",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL FILE FORMAT raw_parquet_format\nWITH\n(\n    FORMAT_TYPE = PARQUET\n);\n\n\nCREATE EXTERNAL TABLE dbo.revenue_parquet_output\nWITH\n(\n    LOCATION = 'extrnl_table/',\n    DATA_SOURCE = raw_ext_sources,\n    FILE_FORMAT = raw_parquet_format\n)\nAS\nSELECT *\nFROM dbo.revene_externals;\n\n\ncreate view revenue_vw as select * from revene_externals\n\nselect * from revenue_vw",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "mikeserverlessdb",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
